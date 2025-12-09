@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.16.0](https://github.com/shifty11/arco-test/compare/v0.15.3...v0.16.0) (2025-12-09)
+
+
+### Features
+
+* add archive comment ([#212](https://github.com/shifty11/arco-test/issues/212)) ([8d86ed7](https://github.com/shifty11/arco-test/commit/8d86ed7d6c687a201159bfcaaec0741a0e574c4b))
+* add change password command ([#211](https://github.com/shifty11/arco-test/issues/211)) ([6b6be81](https://github.com/shifty11/arco-test/commit/6b6be81213cc3f15f08de02f5e69bffcb483f6eb))
+* add compression ([#205](https://github.com/shifty11/arco-test/issues/205)) ([c9a0733](https://github.com/shifty11/arco-test/commit/c9a0733f52727f263a8293dba688befeb39ee1f5))
+* add exclude caches option ([#213](https://github.com/shifty11/arco-test/issues/213)) ([2ab3e1a](https://github.com/shifty11/arco-test/commit/2ab3e1ad947caf6c6faf5ba2e918c76a2b0c5d6b))
+* add macos code signing ([#209](https://github.com/shifty11/arco-test/issues/209)) ([5563b4a](https://github.com/shifty11/arco-test/commit/5563b4a5c8260919e83ad6809054945d0a3b2cb2))
+* add overrage usage calculation ([#201](https://github.com/shifty11/arco-test/issues/201)) ([0395768](https://github.com/shifty11/arco-test/commit/0395768a47e1172088951b8d60b4b863c9906ff9))
+* add repository verification ([#206](https://github.com/shifty11/arco-test/issues/206)) ([929d856](https://github.com/shifty11/arco-test/commit/929d856540471d20d1cfe442006ce8946be4ef41))
+* calculate storage space ([#198](https://github.com/shifty11/arco-test/issues/198)) ([2879b66](https://github.com/shifty11/arco-test/commit/2879b666f87854674dfe1a7a8e1190ff6ba56f9f))
+* change update url ([16a7bfd](https://github.com/shifty11/arco-test/commit/16a7bfd940a2a60c1054e2e31c4375546d836571))
+* redesign layout ([#204](https://github.com/shifty11/arco-test/issues/204)) ([1cd8bf9](https://github.com/shifty11/arco-test/commit/1cd8bf9357fa60a4104f452e8e041164214632d9))
+* redesign whole app ([#216](https://github.com/shifty11/arco-test/issues/216)) ([bca6cc1](https://github.com/shifty11/arco-test/commit/bca6cc10d29e237251a07ca91e602bc05fc75b14))
+* test change ([55376e3](https://github.com/shifty11/arco-test/commit/55376e3404f4faacc81d97cec3415ebd885ab79c))
+
+
+### Bug Fixes
+
+* auto-clear compression level for modes that don't support it ([#214](https://github.com/shifty11/arco-test/issues/214)) ([8909e00](https://github.com/shifty11/arco-test/commit/8909e005c4f51564726e5717546827462a7e79a2))
+* **db:** consolidate archive-backup_profile foreign key columns ([#207](https://github.com/shifty11/arco-test/issues/207)) ([bc4dd6c](https://github.com/shifty11/arco-test/commit/bc4dd6cc45da2ce8741755966d9712f3b5942182))
+* **frontend:** show duration column in archives table ([#208](https://github.com/shifty11/arco-test/issues/208)) ([fffd202](https://github.com/shifty11/arco-test/commit/fffd2026457ee858c475b26129180572200bc3a4))
+* update macFUSE URL from osxfuse to macfuse ([#210](https://github.com/shifty11/arco-test/issues/210)) ([f75a1f0](https://github.com/shifty11/arco-test/commit/f75a1f0d1faaeea1da7eb2393c3c704d689f9faa))
+
 ## [0.15.3](https://github.com/loomi-labs/arco/compare/v0.15.2...v0.15.3) (2025-10-12)
 
 
