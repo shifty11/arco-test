@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.16.5](https://github.com/shifty11/arco-test/compare/v0.16.4...v0.16.5) (2025-12-09)
+
+
+### Bug Fixes
+
+* download ([303cb0c](https://github.com/shifty11/arco-test/commit/303cb0cacda463c929132daba2fdd45b7e94701a))
+* install location ([d0ce82f](https://github.com/shifty11/arco-test/commit/d0ce82f39feff9b09a15a9d0943c3ac9c5527f48))
+
 ## [0.16.4](https://github.com/shifty11/arco-test/compare/v0.16.3...v0.16.4) (2025-12-09)
 
 
