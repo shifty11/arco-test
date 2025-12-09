@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.4](https://github.com/shifty11/arco-test/compare/v0.16.3...v0.16.4) (2025-12-09)
+
+
+### Bug Fixes
+
+* quitting issues ([ecea818](https://github.com/shifty11/arco-test/commit/ecea818a14f97f9f13f24513ea8fd04d90726fa8))
+
 ## [0.16.3](https://github.com/shifty11/arco-test/compare/v0.16.2...v0.16.3) (2025-12-09)
 
 
