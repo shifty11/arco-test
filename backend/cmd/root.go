@@ -275,12 +275,6 @@ func startApp(log *zap.SugaredLogger, config *types.Config, assets fs.FS, startH
 		log.Debugf("Opening %s", app.Name)
 		showOrCreateMainWindow(config)
 	})
-	if platform.IsMacOS() {
-		menu.Add("Uninstall...").OnClick(func(_ *application.Context) {
-			log.Debugf("Uninstalling %s", app.Name)
-			arco.Uninstall()
-		})
-	}
 	menu.Add("Quit").OnClick(func(_ *application.Context) {
 		log.Debugf("Quitting %s", app.Name)
 		arco.SetQuit()
