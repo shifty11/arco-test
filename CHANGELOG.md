@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.16.1](https://github.com/shifty11/arco-test/compare/v0.16.0...v0.16.1) (2025-12-09)
+
+
+### Bug Fixes
+
+* CI/CD ([2190622](https://github.com/shifty11/arco-test/commit/219062292bc0fa6e50bdba2ca64adf09c4936e2f))
+* small change ([ba9400a](https://github.com/shifty11/arco-test/commit/ba9400a2768d16396fc6a30184e18ffc5cea127e))
+
 ## [0.16.0](https://github.com/shifty11/arco-test/compare/v0.15.3...v0.16.0) (2025-12-09)
 
 
