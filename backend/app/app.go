@@ -575,19 +575,28 @@ func (a *App) initDb() (*ent.Client, error) {
 }
 
 func (a *App) ensureBorgBinary() error {
+	start := time.Now()
 	a.state.SetStartupStatus(a.ctx, appstate.StartupStatusCheckingForBorgUpdates, nil)
-	if !a.isTargetVersionInstalled(a.config.BorgVersion) {
+
+	checkStart := time.Now()
+	installed := a.isTargetVersionInstalled(a.config.BorgVersion)
+	a.log.Infof("isTargetVersionInstalled took %v", time.Since(checkStart))
+
+	if !installed {
 		a.state.SetStartupStatus(a.ctx, appstate.StartupStatusUpdatingBorg, nil)
 		a.log.Info("Installing Borg binary")
+		installStart := time.Now()
 		if err := a.installBorgBinary(); err != nil {
 			return fmt.Errorf("failed to install Borg binary: %w", err)
-		} else {
-			// Check again to make sure the binary was installed correctly
-			if !a.isTargetVersionInstalled(a.config.BorgVersion) {
-				return fmt.Errorf("failed to install Borg binary: version mismatch")
-			}
+		}
+		a.log.Infof("installBorgBinary took %v", time.Since(installStart))
+
+		// Check again to make sure the binary was installed correctly
+		if !a.isTargetVersionInstalled(a.config.BorgVersion) {
+			return fmt.Errorf("failed to install Borg binary: version mismatch")
 		}
 	}
+	a.log.Infof("ensureBorgBinary total took %v", time.Since(start))
 	return nil
 }
 
@@ -602,8 +611,10 @@ func (a *App) isTargetVersionInstalled(targetVersion string) bool {
 }
 
 func (a *App) version() (string, error) {
+	start := time.Now()
 	cmd := exec.Command(a.config.BorgPath, "--version")
 	out, err := cmd.CombinedOutput()
+	a.log.Infof("borg --version command took %v", time.Since(start))
 	if err != nil {
 		return "", err
 	}
