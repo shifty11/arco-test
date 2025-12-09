@@ -76,6 +76,20 @@ func getConfigDir() (path string, err error) {
 	if err != nil {
 		return
 	}
+	if platform.IsMacOS() {
+		newPath := filepath.Join(dir, "Library", "Application Support", "Arco")
+		oldPath := filepath.Join(dir, ".config", "arco")
+
+		// Migrate from old location if it exists and new doesn't
+		if _, err := os.Stat(oldPath); err == nil {
+			if _, err := os.Stat(newPath); os.IsNotExist(err) {
+				// Old exists, new doesn't - migrate
+				_ = os.MkdirAll(filepath.Dir(newPath), 0755)
+				_ = os.Rename(oldPath, newPath)
+			}
+		}
+		return newPath, nil
+	}
 	return filepath.Join(dir, ".config", "arco"), nil
 }
 
@@ -261,6 +275,12 @@ func startApp(log *zap.SugaredLogger, config *types.Config, assets fs.FS, startH
 		log.Debugf("Opening %s", app.Name)
 		showOrCreateMainWindow(config)
 	})
+	if platform.IsMacOS() {
+		menu.Add("Uninstall...").OnClick(func(_ *application.Context) {
+			log.Debugf("Uninstalling %s", app.Name)
+			arco.Uninstall()
+		})
+	}
 	menu.Add("Quit").OnClick(func(_ *application.Context) {
 		log.Debugf("Quitting %s", app.Name)
 		arco.SetQuit()
