@@ -231,9 +231,6 @@ func startApp(log *zap.SugaredLogger, config *types.Config, assets fs.FS, startH
 			DisableQuitOnLastWindowClosed: true,
 		},
 		LogLevel: slog.Level(log.Level() * 4), // slog uses a multiplier of 4
-		ShouldQuit: func() bool {
-			return arco.ShouldQuit()
-		},
 		OnShutdown: func() {
 			arco.Shutdown()
 		},

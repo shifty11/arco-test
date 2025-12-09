@@ -252,11 +252,6 @@ func (a *App) SetQuit() {
 	a.shouldQuit = true
 }
 
-func (a *App) ShouldQuit() bool {
-	a.log.Debug("ShouldQuit called")
-	return a.state.GetStartupState().Error != "" || a.shouldQuit
-}
-
 func (a *App) startArcoCloudSyncListener() {
 	a.log.Debug("Starting ArcoCloud sync listener")
 
