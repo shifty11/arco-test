@@ -89,4 +89,3 @@ task dev:frontend
 ### Additional Commands
 
 For more development commands, see the [CLAUDE.md](CLAUDE.md) file, which contains a comprehensive list of all available commands for building, testing, and developing Arco.
-
