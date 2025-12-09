@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.16.3](https://github.com/shifty11/arco-test/compare/v0.16.2...v0.16.3) (2025-12-09)
+
+
+### Bug Fixes
+
+* add timing instructions ([2e636ac](https://github.com/shifty11/arco-test/commit/2e636acef6c490bc9e6783bfd039922aa7f9b874))
+* repo path ([73044ad](https://github.com/shifty11/arco-test/commit/73044add89cd3696d04f13ae9ee41b7b42e57cc4))
+
 ## [0.16.2](https://github.com/shifty11/arco-test/compare/v0.16.1...v0.16.2) (2025-12-09)
 
 
