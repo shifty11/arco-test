@@ -349,7 +349,7 @@ func (a *App) getLatestRelease(client *github.Client) (*github.RepositoryRelease
 	ctx, cancel := context.WithTimeout(a.ctx, 30*time.Second)
 	defer cancel()
 
-	release, _, err := client.Repositories.GetLatestRelease(ctx, "rapha", "arco-test")
+	release, _, err := client.Repositories.GetLatestRelease(ctx, "shifty11", "arco-test")
 	if err != nil {
 		return nil, fmt.Errorf("failed to get latest release: %w", err)
 	}
