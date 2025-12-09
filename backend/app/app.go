@@ -365,7 +365,7 @@ func (a *App) findReleaseAsset(release *github.RepositoryRelease) (*github.Relea
 
 func (a *App) downloadReleaseAsset(client *github.Client, asset *github.ReleaseAsset, path string) error {
 	httpClient := &http.Client{Timeout: time.Second * 60}
-	readCloser, _, err := client.Repositories.DownloadReleaseAsset(a.ctx, "loomi-labs", "arco", *asset.ID, httpClient)
+	readCloser, _, err := client.Repositories.DownloadReleaseAsset(a.ctx, "shifty11", "arco-test", *asset.ID, httpClient)
 	if err != nil {
 		return fmt.Errorf("failed to download release asset: %w", err)
 	}
