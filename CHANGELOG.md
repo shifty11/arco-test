@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.3](https://github.com/shifty11/arco-test/compare/v0.17.2...v0.17.3) (2025-12-10)
+
+
+### Bug Fixes
+
+* trigger release ([be1ff8d](https://github.com/shifty11/arco-test/commit/be1ff8d764c944d27d46f46ff334e4f323f70569))
+
 ## [0.17.2](https://github.com/shifty11/arco-test/compare/v0.17.1...v0.17.2) (2025-12-10)
 
 
