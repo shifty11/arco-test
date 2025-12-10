@@ -242,6 +242,7 @@ jobs:
           pkgbuild --identifier com.arcobackup.arco --version "${VERSION#v}" \
             --install-location "Applications" --scripts build/darwin/scripts \
             --component bin/arco.app /tmp/arco-component.pkg
+          cp LICENSE build/darwin/resources/LICENSE
           productbuild --distribution build/darwin/distribution.xml \
             --resources build/darwin/resources \
             --package-path /tmp bin/Arco-Installer.pkg

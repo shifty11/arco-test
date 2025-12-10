@@ -5,6 +5,7 @@
     <!-- Install to /Applications with user ownership for auto-updates -->
     <domains enable_localSystem="true" enable_currentUserHome="false" enable_anywhere="false"/>
     <options customize="never" require-scripts="false" hostArchitectures="x86_64,arm64"/>
+    <license file="LICENSE"/>
 
     <choices-outline>
         <line choice="default">
