@@ -310,12 +310,15 @@ func (a *App) updateArco() (bool, error) {
 	a.log.Infof("Updating Arco binary to version %s", releaseVersion.String())
 	a.state.SetStartupStatus(a.ctx, appstate.StartupStatusApplyingUpdates, nil)
 
+	a.log.Debug("Finding release asset...")
 	releaseAsset, err := a.findReleaseAsset(release)
 	if err != nil {
 		return false, err
 	}
+	a.log.Debugf("Found release asset: %s", *releaseAsset.Name)
 
 	// Get execution path
+	a.log.Debug("Getting executable path...")
 	execPath, err := os.Executable()
 	if err != nil {
 		return false, fmt.Errorf("failed to get executable path: %w", err)
@@ -324,6 +327,7 @@ func (a *App) updateArco() (bool, error) {
 	if err != nil {
 		return false, err
 	}
+	a.log.Debugf("Executable path: %s, resolved: %s", execPath, path)
 
 	// On macOS, resolve to .app bundle path instead of binary path
 	// e.g., /Users/foo/Applications/arco.app/Contents/MacOS/arco -> /Users/foo/Applications/arco.app
@@ -332,10 +336,12 @@ func (a *App) updateArco() (bool, error) {
 		a.log.Debugf("Resolved app bundle path: %s", path)
 	}
 
+	a.log.Debug("Downloading release asset...")
 	err = a.downloadReleaseAsset(client, releaseAsset, path)
 	if err != nil {
 		return false, err
 	}
+	a.log.Debug("Download and extraction completed successfully")
 
 	return true, nil
 }
@@ -364,6 +370,7 @@ func (a *App) findReleaseAsset(release *github.RepositoryRelease) (*github.Relea
 }
 
 func (a *App) downloadReleaseAsset(client *github.Client, asset *github.ReleaseAsset, path string) error {
+	a.log.Debugf("Downloading asset ID %d...", *asset.ID)
 	httpClient := &http.Client{Timeout: time.Second * 60}
 	readCloser, _, err := client.Repositories.DownloadReleaseAsset(a.ctx, "shifty11", "arco-test", *asset.ID, httpClient)
 	if err != nil {
@@ -374,13 +381,16 @@ func (a *App) downloadReleaseAsset(client *github.Client, asset *github.ReleaseA
 	}
 	defer readCloser.Close()
 
+	a.log.Debug("Reading asset into buffer...")
 	var buf bytes.Buffer
 	size, err := io.Copy(&buf, readCloser)
 	if err != nil {
 		return fmt.Errorf("failed to write to buffer: %w", err)
 	}
+	a.log.Debugf("Downloaded %d bytes", size)
 	reader := bytes.NewReader(buf.Bytes())
 
+	a.log.Debug("Opening zip reader...")
 	zipReader, err := zip.NewReader(reader, size)
 	if err != nil {
 		return fmt.Errorf("failed to read zip zipReader: %w", err)
@@ -388,8 +398,10 @@ func (a *App) downloadReleaseAsset(client *github.Client, asset *github.ReleaseA
 	defer buf.Reset()
 
 	if platform.IsMacOS() {
+		a.log.Debug("Extracting app bundle...")
 		return a.extractAppBundle(zipReader, path)
 	}
+	a.log.Debug("Extracting binary...")
 	return a.extractBinary(zipReader, path)
 }
 
@@ -439,16 +451,21 @@ func (a *App) resolveAppBundlePath(binaryPath string) string {
 // extractAppBundle extracts the entire .app bundle from the ZIP to replace the existing bundle.
 // This is required on macOS to preserve code signatures.
 func (a *App) extractAppBundle(zipReader *zip.Reader, appBundlePath string) error {
+	a.log.Debugf("extractAppBundle: target path %s", appBundlePath)
+
 	// Extract to a temp directory first for atomic replacement
+	a.log.Debugf("Creating temp directory in %s", filepath.Dir(appBundlePath))
 	tempDir, err := os.MkdirTemp(filepath.Dir(appBundlePath), "arco-update-*")
 	if err != nil {
 		return fmt.Errorf("failed to create temp directory: %w", err)
 	}
+	a.log.Debugf("Created temp directory: %s", tempDir)
 	defer os.RemoveAll(tempDir) // Clean up temp dir on failure
 
 	tempAppPath := filepath.Join(tempDir, "arco.app")
 
 	// Extract all files from the ZIP
+	a.log.Debugf("Extracting %d files from ZIP...", len(zipReader.File))
 	for _, file := range zipReader.File {
 		// The ZIP contains arco.app/... so we need to extract it to tempDir
 		destPath := filepath.Join(tempDir, file.Name)
@@ -491,21 +508,25 @@ func (a *App) extractAppBundle(zipReader *zip.Reader, appBundlePath string) erro
 	}
 
 	// Verify the extraction produced an app bundle
+	a.log.Debug("Verifying extracted app bundle exists...")
 	if _, err := os.Stat(tempAppPath); os.IsNotExist(err) {
 		return fmt.Errorf("extracted ZIP does not contain arco.app bundle")
 	}
+	a.log.Debugf("Verified: %s exists", tempAppPath)
 
 	// Remove old app bundle
 	a.log.Debugf("Removing old app bundle at %s", appBundlePath)
 	if err := os.RemoveAll(appBundlePath); err != nil {
 		return fmt.Errorf("failed to remove old app bundle: %w", err)
 	}
+	a.log.Debug("Old app bundle removed")
 
 	// Move new app bundle into place
 	a.log.Debugf("Moving new app bundle from %s to %s", tempAppPath, appBundlePath)
 	if err := os.Rename(tempAppPath, appBundlePath); err != nil {
 		return fmt.Errorf("failed to move new app bundle: %w", err)
 	}
+	a.log.Debug("New app bundle moved into place")
 
 	return nil
 }
