@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.17.0](https://github.com/shifty11/arco-test/compare/v0.16.6...v0.17.0) (2025-12-10)
+
+
+### Features
+
+* add uninstall ([d17cb62](https://github.com/shifty11/arco-test/commit/d17cb6276ee01c604affadf0260ff8b0ef8c738a))
+* update license ([761b8a0](https://github.com/shifty11/arco-test/commit/761b8a0f5ee1da689299c2abb4333d88e458bdd7))
+
+
+### Bug Fixes
+
+* make postinstall script robust ([ab4c4f2](https://github.com/shifty11/arco-test/commit/ab4c4f2a0628988486361f00791df08c2d7d7de4))
+* path ([a5e656c](https://github.com/shifty11/arco-test/commit/a5e656c93611159bf51170656258e0eb5d5491e3))
+
+
+### Reverts
+
+* Uninstall ([866214a](https://github.com/shifty11/arco-test/commit/866214ad7dcf9687bd68b416e4b6babdaeb25cef))
+
 ## [0.16.6](https://github.com/shifty11/arco-test/compare/v0.16.5...v0.16.6) (2025-12-09)
 
 
