@@ -155,17 +155,6 @@ jobs:
         run: task darwin:create:app:bundle
         shell: bash
 
-      # Download macFUSE for PKG installer
-      - name: Download macFUSE
-        if: steps.should-build.outputs.should_run == 'true' && runner.os == 'macOS'
-        run: |
-          mkdir -p build/darwin/resources
-          curl -L https://github.com/macfuse/macfuse/releases/download/macfuse-5.1.2/macfuse-5.1.2.dmg -o /tmp/macfuse.dmg
-          hdiutil attach /tmp/macfuse.dmg -mountpoint /tmp/macfuse-mount
-          cp "/tmp/macfuse-mount/Install macFUSE.pkg" build/darwin/resources/macFUSE.pkg
-          hdiutil detach /tmp/macfuse-mount
-          rm /tmp/macfuse.dmg
-
       # Setup keychain and import certificates for macOS signing
       - name: Setup Keychain and Import Certificates
         if: runner.os == 'macOS' && inputs.push_artifacts == true
