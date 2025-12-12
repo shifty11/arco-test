@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.4](https://github.com/shifty11/arco-test/compare/v0.18.3...v0.18.4) (2025-12-12)
+
+
+### Bug Fixes
+
+* macos build ([6b11a16](https://github.com/shifty11/arco-test/commit/6b11a16af9671eb590b117be2697592bc556281c))
+
 ## [0.18.3](https://github.com/shifty11/arco-test/compare/v0.18.2...v0.18.3) (2025-12-12)
 
 
