@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.3](https://github.com/shifty11/arco-test/compare/v0.18.2...v0.18.3) (2025-12-12)
+
+
+### Bug Fixes
+
+* remove macfuse ([947752f](https://github.com/shifty11/arco-test/commit/947752f7742e594cc590ae975e954cc6d2a389f4))
+
 ## [0.18.2](https://github.com/shifty11/arco-test/compare/v0.18.1...v0.18.2) (2025-12-12)
 
 
