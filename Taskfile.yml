@@ -10,7 +10,7 @@ includes:
   proto: ./proto/Taskfile.proto.yml
 
 vars:
-  APP_NAME: "arco"
+  APP_NAME: "Arco"
   BIN_DIR: "bin"
   VITE_PORT: '{{.WAILS_VITE_PORT | default 9245}}'
   VERSION:
