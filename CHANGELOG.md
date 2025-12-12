@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.19.0](https://github.com/shifty11/arco-test/compare/v0.18.4...v0.19.0) (2025-12-12)
+
+
+### Features
+
+* hide dock icon when no windows are open on macOS ([ca95a9a](https://github.com/shifty11/arco-test/commit/ca95a9a30ecde8aeea570fe239bfdb9f816912a8))
+
+
+### Bug Fixes
+
+* capitalize APP_NAME to "Arco" for proper dock tooltip ([faf41c7](https://github.com/shifty11/arco-test/commit/faf41c710c2d757d7301a6d808b2d5808822516f))
+* separate display name from binary name for cross-platform builds ([4893513](https://github.com/shifty11/arco-test/commit/48935136938459af3f1ac4d8ef513a8def2dd8df))
+
 ## [0.18.4](https://github.com/shifty11/arco-test/compare/v0.18.3...v0.18.4) (2025-12-12)
 
 
