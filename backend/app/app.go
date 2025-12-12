@@ -282,6 +282,9 @@ func (a *App) startArcoCloudSyncListener() {
 }
 
 func (a *App) updateArco() (bool, error) {
+	// Clean up any old app bundles from previous updates
+	a.cleanupOldAppBundles()
+
 	if types.EnvVarDevelopment.Bool() {
 		a.log.Info("Development mode enabled, skipping update check")
 		return false, nil
@@ -432,6 +435,30 @@ func (a *App) extractBinary(zipReader *zip.Reader, path string) error {
 	return nil
 }
 
+// cleanupOldAppBundles removes any leftover .app.old bundles from previous updates.
+// This is called at startup to clean up after a successful update.
+func (a *App) cleanupOldAppBundles() {
+	if !platform.IsMacOS() {
+		return
+	}
+	execPath, err := os.Executable()
+	if err != nil {
+		return
+	}
+	path, err := filepath.EvalSymlinks(execPath)
+	if err != nil {
+		return
+	}
+	appBundlePath := a.resolveAppBundlePath(path)
+	oldAppPath := appBundlePath + ".old"
+	if _, err := os.Stat(oldAppPath); err == nil {
+		a.log.Infof("Cleaning up old app bundle: %s", oldAppPath)
+		if err := os.RemoveAll(oldAppPath); err != nil {
+			a.log.Warnf("Failed to clean up old app bundle: %v", err)
+		}
+	}
+}
+
 // resolveAppBundlePath resolves the binary path to the .app bundle path on macOS.
 // e.g., /Users/foo/Applications/arco.app/Contents/MacOS/arco -> /Users/foo/Applications/arco.app
 func (a *App) resolveAppBundlePath(binaryPath string) string {
@@ -514,12 +541,17 @@ func (a *App) extractAppBundle(zipReader *zip.Reader, appBundlePath string) erro
 	}
 	a.log.Debugf("Verified: %s exists", tempAppPath)
 
-	// Remove old app bundle
-	a.log.Debugf("Removing old app bundle at %s", appBundlePath)
-	if err := os.RemoveAll(appBundlePath); err != nil {
-		return fmt.Errorf("failed to remove old app bundle: %w", err)
+	// Rename old app bundle to .old (instead of deleting, which fails on macOS due to code signature protection)
+	// The running app continues via inodes even after its path is renamed.
+	// The .old bundle will be cleaned up on next startup.
+	oldAppPath := appBundlePath + ".old"
+	a.log.Debugf("Removing any previous backup at %s", oldAppPath)
+	os.RemoveAll(oldAppPath) // Ignore error - may not exist
+	a.log.Debugf("Renaming old app bundle from %s to %s", appBundlePath, oldAppPath)
+	if err := os.Rename(appBundlePath, oldAppPath); err != nil {
+		return fmt.Errorf("failed to rename old app bundle: %w", err)
 	}
-	a.log.Debug("Old app bundle removed")
+	a.log.Debug("Old app bundle renamed to .old")
 
 	// Move new app bundle into place
 	a.log.Debugf("Moving new app bundle from %s to %s", tempAppPath, appBundlePath)
