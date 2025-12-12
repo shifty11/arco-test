@@ -15,6 +15,9 @@ import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Cr
 import * as arcov1$0 from "../../api/v1/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import * as backup_profile$0 from "../backup_profile/models.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import * as statemachine$0 from "../statemachine/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
@@ -104,7 +107,7 @@ export function Delete(id: number): $CancellablePromise<void> {
 /**
  * ExaminePrunes analyzes what would be pruned with given rules
  */
-export function ExaminePrunes(backupProfileId: number, pruningRule: ent$0.PruningRule | null, saveResults: boolean): $CancellablePromise<$models.ExaminePruningResult[]> {
+export function ExaminePrunes(backupProfileId: number, pruningRule: backup_profile$0.PruningRule | null, saveResults: boolean): $CancellablePromise<$models.ExaminePruningResult[]> {
     return $Call.ByID(166629156, backupProfileId, pruningRule, saveResults).then(($result: any) => {
         return $$createType5($result);
     });
@@ -346,11 +349,25 @@ export function Remove(id: number): $CancellablePromise<void> {
 }
 
 /**
+ * TestPathConnection tests if a path can connect to a valid borg repository.
+ * Requires repository to be in Idle state (for borg call).
+ * Returns:
+ * - IsValid=false + ErrorMessage: Not idle (blocking)
+ * - IsValid=true + ConnectionWarning: Connection failed (can proceed with warning)
+ * - IsValid=true: Connection successful
+ */
+export function TestPathConnection(repoId: number, newPath: string, password: string): $CancellablePromise<$models.ValidatePathChangeResult | null> {
+    return $Call.ByID(971940321, repoId, newPath, password).then(($result: any) => {
+        return $$createType27($result);
+    });
+}
+
+/**
  * TestRepoConnection tests connection to a repository
  */
 export function TestRepoConnection(path: string, password: string): $CancellablePromise<$models.TestRepoConnectionResult> {
     return $Call.ByID(1151269054, path, password).then(($result: any) => {
-        return $$createType26($result);
+        return $$createType28($result);
     });
 }
 
@@ -366,7 +383,7 @@ export function Unmount(repoId: number): $CancellablePromise<string> {
  */
 export function UnmountAllForRepos(repoIds: number[]): $CancellablePromise<any[]> {
     return $Call.ByID(1105783937, repoIds).then(($result: any) => {
-        return $$createType27($result);
+        return $$createType29($result);
     });
 }
 
@@ -391,6 +408,18 @@ export function Update(repoId: number, updateReq: $models.UpdateRequest | null):
  */
 export function ValidateArchiveName(archiveId: number, name: string): $CancellablePromise<string> {
     return $Call.ByID(392924285, archiveId, name);
+}
+
+/**
+ * ValidatePathChange validates path format and uniqueness (no connection test).
+ * Returns:
+ * - IsValid=false + ErrorMessage: Blocking errors (cannot proceed)
+ * - IsValid=true: Path is valid (connection not tested)
+ */
+export function ValidatePathChange(repoId: number, newPath: string): $CancellablePromise<$models.ValidatePathChangeResult | null> {
+    return $Call.ByID(2418041363, repoId, newPath).then(($result: any) => {
+        return $$createType27($result);
+    });
 }
 
 /**
@@ -434,5 +463,7 @@ const $$createType22 = $models.PruningDates.createFrom;
 const $$createType23 = $Create.Array($$createType8);
 const $$createType24 = $models.RepositoryWithQueue.createFrom;
 const $$createType25 = $Create.Nullable($$createType24);
-const $$createType26 = $models.TestRepoConnectionResult.createFrom;
-const $$createType27 = $Create.Array($Create.Any);
+const $$createType26 = $models.ValidatePathChangeResult.createFrom;
+const $$createType27 = $Create.Nullable($$createType26);
+const $$createType28 = $models.TestRepoConnectionResult.createFrom;
+const $$createType29 = $Create.Array($Create.Any);
