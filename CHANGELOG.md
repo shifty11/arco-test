@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.2](https://github.com/shifty11/arco-test/compare/v0.18.1...v0.18.2) (2025-12-12)
+
+
+### Bug Fixes
+
+* use rename instead of delete for macOS self-update ([5f2b232](https://github.com/shifty11/arco-test/commit/5f2b232149ec9a39e1fcd9887b9645e7e7e1e429))
+
 ## [0.18.1](https://github.com/shifty11/arco-test/compare/v0.18.0...v0.18.1) (2025-12-12)
 
 
