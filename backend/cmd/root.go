@@ -183,6 +183,9 @@ func initConfig(configDir string, icons *types.Icons, migrations fs.FS, autoUpda
 }
 
 func showOrCreateMainWindow(config *types.Config) {
+	// Show dock icon when opening a window on macOS
+	platform.ShowDockIcon()
+
 	wailsApp := application.Get()
 	window, ok := wailsApp.Window.GetByName(types.WindowTitle)
 	if ok {
@@ -191,7 +194,7 @@ func showOrCreateMainWindow(config *types.Config) {
 		return
 	}
 
-	wailsApp.Window.NewWithOptions(application.WebviewWindowOptions{
+	newWindow := wailsApp.Window.NewWithOptions(application.WebviewWindowOptions{
 		Name:  types.WindowTitle,
 		Title: types.WindowTitle,
 		Mac: application.MacWindow{
@@ -207,6 +210,11 @@ func showOrCreateMainWindow(config *types.Config) {
 		StartState:       application.WindowStateMinimised,
 		MaxWidth:         3840,
 		MaxHeight:        3840,
+	})
+
+	// Hide dock icon when window is closed on macOS
+	newWindow.OnWindowEvent(events.Common.WindowClosing, func(event *application.WindowEvent) {
+		platform.HideDockIcon()
 	})
 }
 
@@ -240,6 +248,7 @@ func startApp(log *zap.SugaredLogger, config *types.Config, assets fs.FS, startH
 		},
 		Mac: application.MacOptions{
 			ApplicationShouldTerminateAfterLastWindowClosed: false,
+			ActivationPolicy:                                application.ActivationPolicyAccessory,
 		},
 		Linux: application.LinuxOptions{
 			DisableQuitOnLastWindowClosed: true,
