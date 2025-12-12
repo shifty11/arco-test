@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.18.0](https://github.com/shifty11/arco-test/compare/v0.17.3...v0.18.0) (2025-12-12)
+
+
+### Features
+
+* add trial and customer portal ([#217](https://github.com/shifty11/arco-test/issues/217)) ([8a9688e](https://github.com/shifty11/arco-test/commit/8a9688e897af0b926bf0392904189bc4f98df4df))
+* allow changing repository path ([#219](https://github.com/shifty11/arco-test/issues/219)) ([c9d5f53](https://github.com/shifty11/arco-test/commit/c9d5f53ad952fb27872d7bbae65958a41bc5c44c))
+
+
+### Bug Fixes
+
+* defer settings init until startup ready ([313bfc3](https://github.com/shifty11/arco-test/commit/313bfc387ef6c44917330b6c618ed15546fc3dae))
+
 ## [0.17.3](https://github.com/shifty11/arco-test/compare/v0.17.2...v0.17.3) (2025-12-10)
 
 
